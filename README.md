@@ -1,39 +1,91 @@
-# アプリケーション開発ドキュメントテンプレート集
+# 設計書テンプレート for Claude Code
 
-LLMによる効率的なドキュメント作成を支援するMarkdownテンプレート集です。
+LLM（特にClaude Code）による効率的なドキュメント作成を支援するMarkdownテンプレート集です。
 
-## 特徴
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Templates](https://img.shields.io/badge/templates-28-green.svg)
+![Language](https://img.shields.io/badge/language-Japanese-red.svg)
 
-- **Markdown形式**: LLMが作成しやすく、人間が読みやすい
-- **バージョン管理対応**: Gitで差分確認が容易
-- **Mermaid対応**: 図表の可視化が可能
-- **構造化**: フェーズ別に整理されたテンプレート
+## 📋 目次
 
-## ディレクトリ構成
+- [概要](#概要)
+- [主な機能](#主な機能)
+- [デモ](#デモ)
+- [クイックスタート](#クイックスタート)
+- [使い方](#使い方)
+- [テンプレート一覧](#テンプレート一覧)
+- [特徴](#特徴)
+- [Claude Code設定](#claude-code設定)
+- [ディレクトリ構成](#ディレクトリ構成)
+- [よくある質問](#よくある質問)
+- [トラブルシューティング](#トラブルシューティング)
+- [貢献](#貢献)
+- [ライセンス](#ライセンス)
 
-```
-templates/
-├── 01_planning/          # 企画・要件定義フェーズ
-├── 02_design/            # 設計フェーズ
-├── 03_development/       # 開発フェーズ
-├── 04_testing/           # テストフェーズ
-├── 05_operation/         # 運用・保守フェーズ
-├── 06_common/            # 共通ドキュメント
-└── examples/             # サンプル・記入例
+## 概要
+
+このプロジェクトは、小規模プロジェクト（フリーランス・副業案件など）向けに最適化された、包括的な設計書テンプレート集を提供します。
+
+### 背景
+
+ソフトウェア開発において、適切なドキュメント作成は重要ですが、小規模プロジェクトでは過度に複雑なドキュメントは負担になります。また、LLM時代において、LLMが効率的に編集・更新できるフォーマットが求められています。
+
+### 目的
+
+- LLM（Claude Code等）で効率的に編集可能なテンプレート提供
+- 小規模プロジェクトに最適化された実践的な内容
+- コピペですぐ使える実装例の提供
+- Mermaid図による視覚化
+- Git管理に適したMarkdown形式
+
+## 主な機能
+
+- ✨ **28種類のテンプレート**: 企画から運用まで全フェーズをカバー
+- 🤖 **Claude Code最適化**: カスタムコマンドで効率的な編集
+- 📊 **Mermaid図対応**: アーキテクチャ図、ER図、シーケンス図など
+- 💻 **実践的コード例**: TypeScript/JavaScript中心の動作するサンプル
+- 🚀 **ワンライナーセットアップ**: curlコマンド1つで導入可能
+- 📝 **日本語完備**: すべてのドキュメントが日本語
+
+## デモ
+
+**リポジトリ**: https://github.com/pon-tanuki/design-docs-for-claude-code
+
+**セットアップデモ**:
+```bash
+# テンプレート + Claude Code設定を一度にセットアップ
+SETUP_CLAUDE=yes curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/quick-setup.sh | bash
 ```
 
 ## クイックスタート
 
-### 方法1: ワンライナーでセットアップ（推奨）
-
-プロジェクトディレクトリで以下のコマンドを実行：
+### 方法1: すべて一度に（推奨）
 
 ```bash
-# すべてのテンプレートをダウンロード
-curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/quick-setup.sh | bash
+SETUP_CLAUDE=yes curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/quick-setup.sh | bash
+```
 
-# カスタマイズ例
-DOCS_DIR=documents PHASE=planning curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/quick-setup.sh | bash
+テンプレート + Claude Code設定を同時にセットアップ
+
+### 方法2: テンプレートのみ
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/quick-setup.sh | bash
+```
+
+### 方法3: インタラクティブセットアップ
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/setup-docs.sh | bash
+```
+
+対話形式でディレクトリ名やフェーズを選択できます。
+
+### 環境変数でカスタマイズ
+
+```bash
+# ドキュメントディレクトリを"documents"に、計画フェーズのみダウンロード
+DOCS_DIR=documents PHASE=planning SETUP_CLAUDE=yes curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/quick-setup.sh | bash
 ```
 
 **環境変数**:
@@ -41,19 +93,8 @@ DOCS_DIR=documents PHASE=planning curl -fsSL https://raw.githubusercontent.com/p
 - `PHASE`: ダウンロードするフェーズ（デフォルト: `all`）
   - `all`: すべて
   - `planning`, `design`, `development`, `testing`, `operation`, `common`
-
-### 方法2: インタラクティブセットアップ
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/setup-docs.sh | bash
-```
-
-対話形式でディレクトリ名やダウンロードするフェーズを選択できます。
-
-### 方法3: 手動ダウンロード
-
-1. 必要なテンプレートを `templates/` から選択
-2. プロジェクトにコピーして使用
+- `SETUP_CLAUDE`: Claude Code設定もセットアップ（デフォルト: `no`）
+  - `yes`, `y`, `true`: セットアップする
 
 ## 使い方
 
@@ -83,27 +124,19 @@ claude
 #  関連するドキュメントを更新してください"
 ```
 
-### 4. Claude Code 設定（推奨）
+### 4. Claude Code カスタムコマンド（推奨）
 
-Claude Code用の設定ファイルをセットアップすると、カスタムコマンドが使えて更に効率的になります：
+Claude Code設定をセットアップすると、以下のコマンドが使えます：
 
 ```bash
-# 専用スクリプトでセットアップ（推奨）
-curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/setup-claude-config.sh | bash
+# 新規ドキュメント作成
+/new-phase-doc planning project_overview
 
-# または、テンプレートと同時にセットアップ
-SETUP_CLAUDE=yes curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/quick-setup.sh | bash
-```
+# ドキュメント更新（メタデータ自動更新）
+/update-doc docs/01_planning/project_overview.md 予算を100万円に変更
 
-カスタムコマンドを使うと以下が可能になります：
-- `/new-phase-doc planning project_overview` - 新規ドキュメント作成
-- `/update-doc <ファイル> <変更内容>` - ドキュメント更新（メタデータ自動更新）
-- `/check-doc <ファイル>` - ドキュメント品質チェック
-
-**インタラクティブセットアップ**を使用した場合は、セットアップ時に確認されます：
-```bash
-curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/setup-docs.sh | bash
-# → "Claude Code設定もセットアップしますか？ [Y/n]" と確認されます
+# 品質チェック
+/check-doc docs/01_planning/project_overview.md
 ```
 
 詳細は [examples/README.md](./examples/README.md) を参照してください。
@@ -165,6 +198,63 @@ curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-c
 - 無料枠を活用した開発環境
 - スモールスタートを前提とした設計
 
+### 🤖 Claude Code 最適化
+- カスタムコマンドで効率的な編集
+- メタデータ（更新日、バージョン、変更履歴）の自動更新
+- ドキュメント品質チェック機能
+
+## Claude Code設定
+
+Claude Code設定をセットアップすると、以下が可能になります：
+
+### 専用スクリプトでセットアップ
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/setup-claude-config.sh | bash
+```
+
+### セットアップ内容
+
+#### `.claude/settings.json`
+- ドキュメントファイルの読み書き許可
+- Git操作の適切な制御
+- 機密ファイルへのアクセス拒否
+
+#### `.claude/CLAUDE.md`
+- ドキュメント編集ルール
+- Mermaid図・コードブロックのガイドライン
+- バージョン管理規約
+
+#### カスタムコマンド
+- `/update-doc <ファイル> <変更内容>`: ドキュメント更新
+- `/check-doc <ファイル>`: 品質チェック
+- `/new-phase-doc <フェーズ> <種類>`: 新規作成
+
+詳細は [examples/README.md](./examples/README.md) を参照してください。
+
+## ディレクトリ構成
+
+```
+.
+├── README.md                    # このファイル
+├── setup-docs.sh               # インタラクティブセットアップ
+├── quick-setup.sh              # クイックセットアップ
+├── setup-claude-config.sh      # Claude Code設定セットアップ
+├── templates/                  # テンプレートファイル
+│   ├── 01_planning/           # 計画フェーズ（3テンプレート）
+│   ├── 02_design/             # 設計フェーズ（4テンプレート）
+│   ├── 03_development/        # 開発フェーズ（3テンプレート）
+│   ├── 04_testing/            # テストフェーズ（3テンプレート）
+│   ├── 05_operation/          # 運用フェーズ（3テンプレート）
+│   └── 06_common/             # 共通ドキュメント（7テンプレート）
+└── examples/                   # Claude Code設定サンプル
+    ├── README.md              # 設定ガイド
+    └── .claude/               # Claude Code設定ファイル
+        ├── settings.json
+        ├── CLAUDE.md
+        └── commands/          # カスタムコマンド
+```
+
 ## よくある質問
 
 ### Q: どのフェーズから始めればいい？
@@ -187,6 +277,50 @@ curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-c
 
 **A:** はい、MIT ライセンスなので商用利用可能です。クレジット表記も不要です。
 
+### Q: 企業の大規模プロジェクトでも使える？
+
+**A:** 可能ですが、このテンプレートは小規模プロジェクト（1-3人）向けに最適化されています。大規模プロジェクトの場合は、追加のセクションやプロセスが必要になる可能性があります。
+
+### Q: 英語版はありますか？
+
+**A:** 現在は日本語版のみです。将来的に英語版の追加を検討しています。
+
+## トラブルシューティング
+
+### セットアップスクリプトが動かない
+
+```bash
+# curlが正しくインストールされているか確認
+curl --version
+
+# パーミッションエラーの場合
+chmod +x setup-docs.sh
+./setup-docs.sh
+```
+
+### Claude Code のカスタムコマンドが表示されない
+
+```bash
+# コマンド一覧を確認
+/help
+
+# .claude/commands/ ディレクトリを確認
+ls -la .claude/commands/
+
+# 設定ファイルを再度ダウンロード
+curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/setup-claude-config.sh | bash
+```
+
+### テンプレートが見つからない
+
+```bash
+# ディレクトリを確認
+ls -la docs/
+
+# 再度ダウンロード
+curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/quick-setup.sh | bash
+```
+
 ## 貢献
 
 バグ報告、機能要望、プルリクエストを歓迎します！
@@ -197,6 +331,38 @@ curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-c
 4. ブランチにプッシュ (`git push origin feature/amazing-feature`)
 5. プルリクエストを作成
 
+**貢献ガイドライン**:
+- すべてのテンプレートは日本語で記述
+- 小規模プロジェクト向けを維持
+- 実践的で動作するコード例を含める
+- Mermaid図を積極的に活用
+- `.claude/CLAUDE.md` のルールに従う
+
+## 作者
+
+**pon-tanuki**
+- GitHub: [@pon-tanuki](https://github.com/pon-tanuki)
+- Repository: https://github.com/pon-tanuki/design-docs-for-claude-code
+
+## 謝辞
+
+- [Claude Code](https://docs.claude.com/en/docs/claude-code) - LLMベースの開発ツール
+- [Mermaid](https://mermaid.js.org/) - テキストベースの図表生成
+- すべてのコントリビューター
+
+## サポート
+
+問題が発生した場合は、以下の方法でサポートを受けられます:
+
+- [Issue を作成](https://github.com/pon-tanuki/design-docs-for-claude-code/issues)
+- [Discussions](https://github.com/pon-tanuki/design-docs-for-claude-code/discussions)
+
 ## ライセンス
 
-MIT License
+MIT License - 商用利用可能、クレジット表記不要
+
+詳細は [LICENSE](./LICENSE) ファイルを参照してください。
+
+---
+
+⭐ このプロジェクトが役に立った場合は、スターをつけていただけると嬉しいです！
