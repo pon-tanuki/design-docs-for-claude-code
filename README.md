@@ -3,8 +3,8 @@
 LLM（特にClaude Code）による効率的なドキュメント作成を支援するMarkdownテンプレート集です。
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Templates](https://img.shields.io/badge/templates-27-green.svg)
-![Examples](https://img.shields.io/badge/examples-4-brightgreen.svg)
+![Templates](https://img.shields.io/badge/templates-23-green.svg)
+![Examples](https://img.shields.io/badge/examples-5-brightgreen.svg)
 ![Language](https://img.shields.io/badge/language-Japanese-red.svg)
 
 ## 📋 目次
@@ -41,7 +41,7 @@ LLM（特にClaude Code）による効率的なドキュメント作成を支援
 
 ## 主な機能
 
-- ✨ **27種類のテンプレート + 4つの記入例**: 企画から運用まで全フェーズをカバー
+- ✨ **23種類のテンプレート + 5つの記入例**: 企画から運用まで全フェーズをカバー
 - 🤖 **Claude Code最適化**: カスタムコマンドで効率的な編集
 - 📊 **Mermaid図対応**: アーキテクチャ図、ER図、シーケンス図など
 - 💻 **実践的コード例**: TypeScript/JavaScript中心の動作するサンプル
@@ -53,6 +53,7 @@ LLM（特にClaude Code）による効率的なドキュメント作成を支援
 **リポジトリ**: https://github.com/pon-tanuki/design-docs-for-claude-code
 
 **セットアップデモ**:
+
 ```bash
 # テンプレート + Claude Code設定を一度にセットアップ
 SETUP_CLAUDE=yes curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/quick-setup.sh | bash
@@ -90,6 +91,7 @@ DOCS_DIR=documents PHASE=planning SETUP_CLAUDE=yes curl -fsSL https://raw.github
 ```
 
 **環境変数**:
+
 - `DOCS_DIR`: ドキュメントディレクトリ名（デフォルト: `docs`）
 - `PHASE`: ダウンロードするフェーズ（デフォルト: `all`）
   - `all`: すべて
@@ -145,32 +147,38 @@ Claude Code設定をセットアップすると、以下のコマンドが使え
 ## テンプレート一覧
 
 ### 📋 計画フェーズ (01_planning)
+
 - **プロジェクト概要書**: 見積もり、契約条件、納品物
 - **要件定義書**: 機能要件、非機能要件、制約事項
 - **ユースケース記述書**: ユーザーシナリオ、画面遷移
 
 ### 🎨 設計フェーズ (02_design)
+
 - **システム設計書**: アーキテクチャ、技術スタック、インフラ
 - **データベース設計書**: ERD、テーブル定義、マイグレーション
 - **API仕様書**: エンドポイント、リクエスト/レスポンス
 - **画面設計書**: デザインシステム、UIコンポーネント
 
 ### 💻 開発フェーズ (03_development)
+
 - **コーディング規約**: 命名規則、スタイルガイド
 - **開発環境構築手順**: セットアップ、トラブルシューティング
 - **技術仕様書**: 実装詳細、アルゴリズム
 
 ### 🧪 テストフェーズ (04_testing)
+
 - **テスト計画書**: テスト戦略、スケジュール
 - **テストケース仕様書**: 詳細なテスト手順
 - **テスト報告書**: 結果サマリー、バグレポート
 
 ### ⚙️ 運用フェーズ (05_operation)
+
 - **運用手順書**: デプロイ、監視、バックアップ
 - **障害対応手順書**: インシデント対応フロー
 - **保守・メンテナンス計画書**: 定期作業、SLA
 
 ### 📚 共通ドキュメント (06_common)
+
 - **ドキュメント共通フォーマット**: 記述ルール
 - **README/CHANGELOG テンプレート**: プロジェクト文書
 - **ADR テンプレート**: アーキテクチャ決定記録
@@ -180,26 +188,31 @@ Claude Code設定をセットアップすると、以下のコマンドが使え
 ## 特徴
 
 ### ✅ 小規模プロジェクト向けに最適化
+
 - フリーランス・小規模チーム（1-3人）での使用を想定
 - 過度に複雑な企業向けプロセスを排除
 - 実践的で即座に使える内容
 
 ### 💡 実践的なコード例
+
 - TypeScript/JavaScript のコード例が豊富
 - コピペですぐ使える実装サンプル
 - 現実的な技術スタック（Next.js, Prisma, PostgreSQL）
 
 ### 📊 Mermaid 図による視覚化
+
 - アーキテクチャ図、ER図、シーケンス図など
 - テキストベースで Git フレンドリー
 - プレビューツール不要（GitHub/VSCode で表示可能）
 
 ### 💰 現実的なコスト見積もり
+
 - 月額 $25 程度のインフラ構成例
 - 無料枠を活用した開発環境
 - スモールスタートを前提とした設計
 
 ### 🤖 Claude Code 最適化
+
 - カスタムコマンドで効率的な編集
 - メタデータ（更新日、バージョン、変更履歴）の自動更新
 - ドキュメント品質チェック機能
@@ -217,16 +230,19 @@ curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-c
 ### セットアップ内容
 
 #### `.claude/settings.json`
+
 - ドキュメントファイルの読み書き許可
 - Git操作の適切な制御
 - 機密ファイルへのアクセス拒否
 
 #### `.claude/CLAUDE.md`
+
 - ドキュメント編集ルール
 - Mermaid図・コードブロックのガイドライン
 - バージョン管理規約
 
 #### カスタムコマンド
+
 - `/update-doc <ファイル> <変更内容>`: ドキュメント更新
 - `/check-doc <ファイル>`: 品質チェック
 - `/new-phase-doc <フェーズ> <種類>`: 新規作成
@@ -248,7 +264,7 @@ curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-c
 │   ├── 04_testing/            # テストフェーズ（3テンプレート）
 │   ├── 05_operation/          # 運用フェーズ（3テンプレート）
 │   ├── 06_common/             # 共通ドキュメント（7テンプレート）
-│   └── examples/              # 記入例（4例）
+│   └── examples/              # 記入例（5例）
 └── examples/                   # Claude Code設定サンプル
     ├── README.md              # 設定ガイド
     └── .claude/               # Claude Code設定ファイル
@@ -334,6 +350,7 @@ curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-c
 5. プルリクエストを作成
 
 **貢献ガイドライン**:
+
 - すべてのテンプレートは日本語で記述
 - 小規模プロジェクト向けを維持
 - 実践的で動作するコード例を含める
@@ -343,6 +360,7 @@ curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-c
 ## 作者
 
 **pon-tanuki**
+
 - GitHub: [@pon-tanuki](https://github.com/pon-tanuki)
 - Repository: https://github.com/pon-tanuki/design-docs-for-claude-code
 
