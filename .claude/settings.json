@@ -1,0 +1,51 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/main/schema/settings.schema.json",
+  "permissions": {
+    "allow": [
+      "Read(**/*.md)",
+      "Write(**/*.md)",
+      "Read(**/*.sh)",
+      "Write(**/*.sh)",
+      "Read(templates/**)",
+      "Read(examples/**)",
+      "Write(templates/**)",
+      "Write(examples/**)",
+      "Read(.claude/**)",
+      "Bash(mkdir:*)",
+      "Bash(chmod:*)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git add:*)",
+      "Bash(git log:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)"
+    ],
+    "ask": [
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Write(.github/**)"
+    ],
+    "deny": [
+      "Read(./.env*)",
+      "Read(./secrets/**)",
+      "Write(./.git/**)",
+      "Bash(rm -rf:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git push --force:*)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "outputStyle": "Explanatory",
+  "includeCoAuthoredBy": true,
+  "hooks": {
+    "PostToolUse": {
+      "Write(templates/**/*.md)": "echo '✓ テンプレートファイルを更新しました: $file'",
+      "Write(*.sh)": "chmod +x $file && echo '✓ スクリプトに実行権限を付与しました: $file'"
+    }
+  },
+  "env": {
+    "TEMPLATE_DIR": "templates",
+    "EXAMPLES_DIR": "examples"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/main/schema/settings.schema.json",
+  "permissions": {
+    "allow": [
+      "Read(docs/**/*.md)",
+      "Write(docs/**/*.md)",
+      "Read(*.md)",
+      "Write(*.md)",
+      "Bash(mkdir:*)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git add:*)",
+      "Bash(git log:*)"
+    ],
+    "ask": [
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Write(src/**)",
+      "Write(package.json)"
+    ],
+    "deny": [
+      "Read(./.env*)",
+      "Read(./secrets/**)",
+      "Read(./**/*secret*)",
+      "Read(./**/*password*)",
+      "Write(./.git/**)",
+      "Bash(rm -rf:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git push --force:*)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "outputStyle": "Explanatory",
+  "includeCoAuthoredBy": true,
+  "hooks": {
+    "PostToolUse": {
+      "Write(docs/**/*.md)": "echo '✓ ドキュメントを更新しました: $file'",
+      "Write(*.md)": "echo '✓ Markdownファイルを更新しました: $file'"
+    }
+  },
+  "env": {
+    "DOCS_DIR": "docs",
+    "PROJECT_PHASE": "planning"
+  }
+}

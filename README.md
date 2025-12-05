@@ -83,6 +83,29 @@ claude
 #  関連するドキュメントを更新してください"
 ```
 
+### 4. Claude Code 設定（オプション）
+
+プロジェクトにClaude Code用の設定ファイルをコピーすると、カスタムコマンドが使えて更に効率的になります：
+
+```bash
+# 設定ファイルをコピー
+curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/examples/.claude/settings.json -o .claude/settings.json
+curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/examples/.claude/CLAUDE.md -o .claude/CLAUDE.md
+
+# カスタムコマンドをコピー
+mkdir -p .claude/commands
+curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/examples/.claude/commands/update-doc.md -o .claude/commands/update-doc.md
+curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/examples/.claude/commands/check-doc.md -o .claude/commands/check-doc.md
+curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/examples/.claude/commands/new-phase-doc.md -o .claude/commands/new-phase-doc.md
+```
+
+カスタムコマンドを使うと以下が可能になります：
+- `/new-phase-doc planning project_overview` - 新規ドキュメント作成
+- `/update-doc <ファイル> <変更内容>` - ドキュメント更新（メタデータ自動更新）
+- `/check-doc <ファイル>` - ドキュメント品質チェック
+
+詳細は [examples/README.md](./examples/README.md) を参照してください。
+
 ## テンプレート一覧
 
 ### 📋 計画フェーズ (01_planning)
