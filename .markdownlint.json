@@ -5,14 +5,21 @@
   "MD004": { "style": "dash" },
   "MD007": { "indent": 2 },
   "MD013": false,
+  "MD022": false,
   "MD024": { "siblings_only": true },
-  "MD025": true,
+  "MD025": false,
   "MD026": { "punctuation": ".,;:!" },
   "MD029": { "style": "ordered" },
+  "MD031": false,
+  "MD032": false,
   "MD033": false,
   "MD034": false,
   "MD036": false,
   "MD040": false,
   "MD041": false,
-  "MD046": { "style": "fenced" }
+  "MD046": { "style": "fenced" },
+  "MD051": false,
+  "MD053": false,
+  "MD058": false,
+  "MD060": false
 }

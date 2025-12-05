@@ -144,19 +144,25 @@ docs/01_planning/project_overview.md を編集してください。
 ### settings.json
 
 #### permissions.allow
+
 Claude Codeが自動的に実行できる操作：
+
 - Markdownファイルの読み書き
 - ディレクトリ作成
 - Git status/diff/log/add
 
 #### permissions.ask
+
 実行前に確認を求める操作：
+
 - Git commit
 - Git push
 - ソースコードの変更
 
 #### permissions.deny
+
 実行を拒否する操作：
+
 - 機密ファイル（.env等）の読み書き
 - 破壊的なコマンド（rm -rf等）
 - 強制プッシュ
@@ -164,6 +170,7 @@ Claude Codeが自動的に実行できる操作：
 ### CLAUDE.md
 
 プロジェクト固有のルールを定義：
+
 - ドキュメント編集時のルール
 - バージョン管理方針
 - Git コミットルール
@@ -231,6 +238,7 @@ allowed-tools: ["Read"]
 ## 📝 Tips
 
 ### Git管理
+
 `.claude/settings.json` と `.claude/CLAUDE.md` は Git にコミットし、チーム全体で共有することを推奨します。
 
 `.claude/settings.local.json` は個人の設定なので `.gitignore` に追加：
@@ -240,6 +248,7 @@ allowed-tools: ["Read"]
 ```
 
 ### 効率的な使い方
+
 1. **新規プロジェクト開始時**: `/new-phase-doc` で一気にドキュメントを作成
 2. **定期的なチェック**: `/check-doc` で品質を維持
 3. **変更時**: `/update-doc` で確実にメタデータを更新
@@ -247,6 +256,7 @@ allowed-tools: ["Read"]
 ### トラブルシューティング
 
 #### コマンドが見つからない
+
 ```bash
 # コマンド一覧を確認
 /help
@@ -256,6 +266,7 @@ ls -la .claude/commands/
 ```
 
 #### 権限エラー
+
 ```
 Error: Permission denied
 ```
