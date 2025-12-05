@@ -3,7 +3,7 @@
 # クイックセットアップスクリプト (非インタラクティブ版)
 # Usage: curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/quick-setup.sh | bash
 # または環境変数で設定:
-# DOCS_DIR=documents PHASE=all curl -fsSL ... | bash
+# DOCS_DIR=documents PHASE=all SETUP_CLAUDE=yes curl -fsSL ... | bash
 #
 
 set -e
@@ -11,11 +11,13 @@ set -e
 # デフォルト設定
 DOCS_DIR="${DOCS_DIR:-docs}"
 PHASE="${PHASE:-all}"
+SETUP_CLAUDE="${SETUP_CLAUDE:-no}"
 REPO_URL="https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main"
 
 echo "🚀 設計書テンプレートをセットアップ中..."
 echo "📂 ディレクトリ: ${DOCS_DIR}"
 echo "📋 フェーズ: ${PHASE}"
+echo "⚙️  Claude Code設定: ${SETUP_CLAUDE}"
 echo ""
 
 # ディレクトリ作成
@@ -121,10 +123,26 @@ esac
 # メインREADME
 download "$REPO_URL/README.md" "$DOCS_DIR/README.md"
 
+# Claude Code設定のセットアップ
+if [ "$SETUP_CLAUDE" = "yes" ] || [ "$SETUP_CLAUDE" = "y" ] || [ "$SETUP_CLAUDE" = "true" ]; then
+    echo ""
+    echo "⚙️  Claude Code設定をセットアップ中..."
+    curl -fsSL "$REPO_URL/setup-claude-config.sh" | bash
+fi
+
 echo ""
 echo "✅ セットアップ完了！"
 echo "📂 ${DOCS_DIR}/ を確認してください"
 echo ""
+
+if [ "$SETUP_CLAUDE" != "yes" ] && [ "$SETUP_CLAUDE" != "y" ] && [ "$SETUP_CLAUDE" != "true" ]; then
+    echo "💡 Claude Code設定をセットアップする場合:"
+    echo "  curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/setup-claude-config.sh | bash"
+    echo "  または"
+    echo "  SETUP_CLAUDE=yes curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/quick-setup.sh | bash"
+    echo ""
+fi
+
 echo "使い方:"
 echo "  cd ${DOCS_DIR}"
 echo "  # Claude Code でテンプレートを編集"

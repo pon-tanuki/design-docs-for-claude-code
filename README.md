@@ -83,26 +83,28 @@ claude
 #  関連するドキュメントを更新してください"
 ```
 
-### 4. Claude Code 設定（オプション）
+### 4. Claude Code 設定（推奨）
 
-プロジェクトにClaude Code用の設定ファイルをコピーすると、カスタムコマンドが使えて更に効率的になります：
+Claude Code用の設定ファイルをセットアップすると、カスタムコマンドが使えて更に効率的になります：
 
 ```bash
-# 設定ファイルをコピー
-curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/examples/.claude/settings.json -o .claude/settings.json
-curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/examples/.claude/CLAUDE.md -o .claude/CLAUDE.md
+# 専用スクリプトでセットアップ（推奨）
+curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/setup-claude-config.sh | bash
 
-# カスタムコマンドをコピー
-mkdir -p .claude/commands
-curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/examples/.claude/commands/update-doc.md -o .claude/commands/update-doc.md
-curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/examples/.claude/commands/check-doc.md -o .claude/commands/check-doc.md
-curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/examples/.claude/commands/new-phase-doc.md -o .claude/commands/new-phase-doc.md
+# または、テンプレートと同時にセットアップ
+SETUP_CLAUDE=yes curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/quick-setup.sh | bash
 ```
 
 カスタムコマンドを使うと以下が可能になります：
 - `/new-phase-doc planning project_overview` - 新規ドキュメント作成
 - `/update-doc <ファイル> <変更内容>` - ドキュメント更新（メタデータ自動更新）
 - `/check-doc <ファイル>` - ドキュメント品質チェック
+
+**インタラクティブセットアップ**を使用した場合は、セットアップ時に確認されます：
+```bash
+curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/setup-docs.sh | bash
+# → "Claude Code設定もセットアップしますか？ [Y/n]" と確認されます
+```
 
 詳細は [examples/README.md](./examples/README.md) を参照してください。
 

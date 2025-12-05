@@ -207,6 +207,28 @@ esac
 echo -e "\n${BLUE}━━━ プロジェクトREADME ━━━${NC}"
 download_file "$REPO_URL/README.md" "$DOCS_DIR/README.md" "README.md"
 
+# Claude Code設定のセットアップを提案
+echo -e "\n${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${YELLOW}💡 Claude Code設定ファイルもセットアップしますか？${NC}"
+echo ""
+echo "Claude Code設定をセットアップすると、以下が可能になります："
+echo "  • /update-doc でドキュメント更新（メタデータ自動更新）"
+echo "  • /check-doc でドキュメント品質チェック"
+echo "  • /new-phase-doc で新規ドキュメント作成"
+echo ""
+
+if [ "$INTERACTIVE" = true ]; then
+    read -p "Claude Code設定もセットアップしますか？ [Y/n] " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]] || [[ -z $REPLY ]]; then
+        echo -e "\n${GREEN}▶ Claude Code設定をセットアップ中...${NC}"
+        curl -fsSL "$REPO_URL/setup-claude-config.sh" | bash
+    else
+        echo -e "${BLUE}スキップしました。後でセットアップする場合は以下を実行してください:${NC}"
+        echo "  curl -fsSL https://raw.githubusercontent.com/pon-tanuki/design-docs-for-claude-code/main/setup-claude-config.sh | bash"
+    fi
+fi
+
 # 完了メッセージ
 echo -e "\n${GREEN}✨ セットアップが完了しました！${NC}"
 echo -e "\n${BLUE}📂 ドキュメントの場所:${NC} ${DOCS_DIR}/"
