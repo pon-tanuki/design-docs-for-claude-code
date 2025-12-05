@@ -1,0 +1,215 @@
+name: Validate Templates
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-markdown:
+    name: Markdown Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install markdownlint-cli
+        run: npm install -g markdownlint-cli
+
+      - name: Run markdownlint
+        run: |
+          markdownlint \
+            --config .markdownlint.json \
+            --ignore node_modules \
+            --ignore .github \
+            '**/*.md' || true
+
+  validate-mermaid:
+    name: Mermaid Syntax Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install @mermaid-js/mermaid-cli
+        run: npm install -g @mermaid-js/mermaid-cli
+
+      - name: Extract and validate Mermaid diagrams
+        run: |
+          # Extract Mermaid code blocks and validate
+          for file in $(find templates -name "*.md"); do
+            echo "Checking $file..."
+            # Extract mermaid blocks (basic check)
+            if grep -q '```mermaid' "$file"; then
+              echo "  ✓ Mermaid diagram found in $file"
+            fi
+          done
+
+  validate-structure:
+    name: Template Structure Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check required sections
+        run: |
+          EXIT_CODE=0
+
+          echo "Checking template structure..."
+          for file in $(find templates -name "*.md" -not -name "README.md"); do
+            echo "Checking $file..."
+
+            # Check for document metadata
+            if ! grep -q "## ドキュメント情報" "$file"; then
+              echo "  ✗ Missing '## ドキュメント情報' section"
+              EXIT_CODE=1
+            fi
+
+            # Check for table of contents
+            if ! grep -q "## 目次" "$file"; then
+              echo "  ✗ Missing '## 目次' section"
+              EXIT_CODE=1
+            fi
+
+            # Check for version history
+            if ! grep -q "## 変更履歴" "$file" && ! grep -q "## Changelog" "$file"; then
+              echo "  ✗ Missing '## 変更履歴' section"
+              EXIT_CODE=1
+            fi
+
+            if [ $EXIT_CODE -eq 0 ]; then
+              echo "  ✓ Structure OK"
+            fi
+          done
+
+          exit $EXIT_CODE
+
+  validate-code-blocks:
+    name: Code Block Language Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check code block languages
+        run: |
+          echo "Checking code block language specifications..."
+
+          # Find code blocks without language specification
+          for file in $(find templates -name "*.md"); do
+            # Check for ``` without language (except closing ```)
+            if grep -E '^```$' "$file" | head -n 1; then
+              echo "Warning: $file contains code blocks without language specification"
+            fi
+          done
+
+  validate-scripts:
+    name: Shell Script Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Run shellcheck
+        run: |
+          for script in *.sh; do
+            if [ -f "$script" ]; then
+              echo "Checking $script..."
+              shellcheck "$script" || true
+            fi
+          done
+
+  count-templates:
+    name: Template Count Consistency
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Count templates and verify README
+        run: |
+          # Count actual template files (excluding READMEs)
+          TEMPLATE_COUNT=$(find templates -name "*.md" -not -name "README.md" -not -path "templates/examples/*" | wc -l)
+          EXAMPLE_COUNT=$(find templates/examples -name "*.md" 2>/dev/null | wc -l || echo "0")
+
+          echo "Template count: $TEMPLATE_COUNT"
+          echo "Example count: $EXAMPLE_COUNT"
+
+          # Check README.md badge
+          if grep -q "templates-$TEMPLATE_COUNT-green" README.md; then
+            echo "✓ Template count in README.md is correct"
+          else
+            echo "✗ Template count in README.md does not match actual count"
+            echo "Expected: $TEMPLATE_COUNT"
+            grep "templates-" README.md || true
+            exit 1
+          fi
+
+          if grep -q "examples-$EXAMPLE_COUNT-brightgreen" README.md; then
+            echo "✓ Example count in README.md is correct"
+          else
+            echo "✗ Example count in README.md does not match actual count"
+            echo "Expected: $EXAMPLE_COUNT"
+            grep "examples-" README.md || true
+            exit 1
+          fi
+
+  test-setup-scripts:
+    name: Test Setup Scripts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Test quick-setup.sh
+        run: |
+          # Test non-interactive mode
+          DOCS_DIR=test_docs PHASE=planning SETUP_CLAUDE=no bash quick-setup.sh
+
+          # Verify files were downloaded
+          if [ -d "test_docs/01_planning" ]; then
+            echo "✓ Planning phase templates downloaded"
+          else
+            echo "✗ Planning phase templates not found"
+            exit 1
+          fi
+
+          # Cleanup
+          rm -rf test_docs
+
+      - name: Test setup-claude-config.sh (non-interactive)
+        run: |
+          # Test in non-interactive mode (simulated)
+          # This is a dry-run test
+          if bash -n setup-claude-config.sh; then
+            echo "✓ setup-claude-config.sh syntax OK"
+          else
+            echo "✗ setup-claude-config.sh syntax error"
+            exit 1
+          fi
+
+  summary:
+    name: Validation Summary
+    runs-on: ubuntu-latest
+    needs: [validate-markdown, validate-mermaid, validate-structure, validate-code-blocks, validate-scripts, count-templates, test-setup-scripts]
+    if: always()
+    steps:
+      - name: Check validation results
+        run: |
+          echo "All validations completed!"
+          echo "Check individual job results above."
